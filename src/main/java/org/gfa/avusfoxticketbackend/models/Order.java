@@ -22,6 +22,9 @@ public class Order {
   @JoinColumn(name = "user_id")
   private User user;
 
+  @OneToMany(mappedBy = "productReview")
+  private List<ProductReview> reviewsWithThisOrder;
+
   public Order() {}
 
   public Order(User user) {
@@ -34,6 +37,15 @@ public class Order {
     this.expiry = expiry;
     this.orderProducts = orderProducts;
     this.user = user;
+  }
+
+  public Order(Long id, String status, String expiry, List<OrderProduct> orderProducts, User user, List<ProductReview> reviewsWithThisOrder) {
+    this.id = id;
+    this.status = status;
+    this.expiry = expiry;
+    this.orderProducts = orderProducts;
+    this.user = user;
+    this.reviewsWithThisOrder = reviewsWithThisOrder;
   }
 
   public List<OrderProduct> getOrderProducts() {
@@ -82,5 +94,13 @@ public class Order {
       output += o.getTotalPrice();
     }
     return output;
+  }
+
+  public List<ProductReview> getReviewsWithThisOrder() {
+    return reviewsWithThisOrder;
+  }
+
+  public void setReviewsWithThisOrder(List<ProductReview> reviewsWithThisOrder) {
+    this.reviewsWithThisOrder = reviewsWithThisOrder;
   }
 }

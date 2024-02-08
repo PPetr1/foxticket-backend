@@ -26,6 +26,9 @@ public class Product {
   @OneToMany(mappedBy = "product")
   private List<OrderProduct> orderProducts;
 
+  @OneToMany(mappedBy = "productReview")
+  private List<ProductReview> reviewList;
+
   public Product() {}
 
   public Product(
@@ -50,6 +53,26 @@ public class Product {
     this.duration = duration;
     this.description = description;
     this.productType = productType;
+  }
+
+  public Product(Long id,
+                 String name,
+                 Double price,
+                 Integer duration,
+                 String description,
+                 ProductType productType,
+                 List<CartProduct> cartProducts,
+                 List<OrderProduct> orderProducts,
+                 List<ProductReview> reviewList) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.duration = duration;
+    this.description = description;
+    this.productType = productType;
+    this.cartProducts = cartProducts;
+    this.orderProducts = orderProducts;
+    this.reviewList = reviewList;
   }
 
   public List<CartProduct> getCartProducts() {

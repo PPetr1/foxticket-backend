@@ -24,6 +24,15 @@ public class ProductReview {
 
     public ProductReview() {}
 
+    public ProductReview(Long id, String reviewContent, Integer numberOfStars, Order order, Product product, User user) {
+        this.id = id;
+        this.reviewContent = reviewContent;
+        this.numberOfStars = numberOfStars;
+        this.order = order;
+        this.product = product;
+        this.user = user;
+    }
+
     public ProductReview(String reviewContent, Integer numberOfStars, Order order, Product product, User user) {
         this.reviewContent = reviewContent;
         this.numberOfStars = numberOfStars;

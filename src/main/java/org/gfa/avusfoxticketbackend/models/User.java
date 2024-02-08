@@ -38,6 +38,9 @@ public class User implements UserDetails {
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private RefreshToken refreshToken;
 
+  @OneToMany(mappedBy = "productReview")
+  private List<ProductReview> reviews;
+
   public User() {
     this.role = Role.USER;
     this.isVerified = false;
@@ -51,6 +54,28 @@ public class User implements UserDetails {
     this.role = Role.USER;
     this.isVerified = false;
     this.orders = new ArrayList<>();
+  }
+
+  public User(Long id,
+              String name,
+              String email,
+              String password,
+              Role role,
+              Boolean isVerified,
+              List<Order> orders,
+              Cart cart,
+              RefreshToken refreshToken,
+              List<ProductReview> reviews) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.role = role;
+    this.isVerified = isVerified;
+    this.orders = orders;
+    this.cart = cart;
+    this.refreshToken = refreshToken;
+    this.reviews = reviews;
   }
 
   public String getEmail() {
@@ -158,6 +183,14 @@ public class User implements UserDetails {
 
   public void setCart(Cart cart) {
     this.cart = cart;
+  }
+
+  public List<ProductReview> getReviews() {
+    return reviews;
+  }
+
+  public void setReviews(List<ProductReview> reviews) {
+    this.reviews = reviews;
   }
 
   @Override

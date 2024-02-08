@@ -57,6 +57,7 @@ public class ProductReviewServiceImpl implements ProductReviewService {
     @Override
     public ProductReviewResponseDTO saveNewProductReview(ProductReviewRequestDTO productReviewRequestDTO, String token) {
         exceptionService.checkProductReviewRequestDTOErrors(productReviewRequestDTO);
+
         Optional<User> currentUserOptional = userService.extractUserFromToken(token);
         Optional<Product> currentProductOptional =
                 productRepository.findByName(productReviewRequestDTO.getProductName());
