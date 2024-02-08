@@ -22,7 +22,7 @@ public class Order {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToMany(mappedBy = "productReview")
+  @OneToMany(mappedBy = "order")
   private List<ProductReview> reviewsWithThisOrder;
 
   public Order() {}

@@ -26,7 +26,7 @@ public class Product {
   @OneToMany(mappedBy = "product")
   private List<OrderProduct> orderProducts;
 
-  @OneToMany(mappedBy = "productReview")
+  @OneToMany(mappedBy = "product")
   private List<ProductReview> reviewList;
 
   public Product() {}

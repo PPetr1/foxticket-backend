@@ -38,7 +38,7 @@ public class User implements UserDetails {
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
   private RefreshToken refreshToken;
 
-  @OneToMany(mappedBy = "productReview")
+  @OneToMany(mappedBy = "user")
   private List<ProductReview> reviews;
 
   public User() {
