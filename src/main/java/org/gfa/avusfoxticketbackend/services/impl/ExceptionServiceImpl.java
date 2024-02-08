@@ -29,11 +29,11 @@ public class ExceptionServiceImpl implements ExceptionService {
 
   @Autowired
   public ExceptionServiceImpl(
-          HttpServletRequest httpServletRequest,
-          UserRepository userRepository,
-          ProductRepository productRepository,
-          PasswordEncoder passwordEncoder,
-          ProductTypeRepository productTypeRepository) {
+      HttpServletRequest httpServletRequest,
+      UserRepository userRepository,
+      ProductRepository productRepository,
+      PasswordEncoder passwordEncoder,
+      ProductTypeRepository productTypeRepository) {
     this.httpServletRequest = httpServletRequest;
     this.userRepository = userRepository;
     this.productRepository = productRepository;
@@ -252,7 +252,9 @@ public class ExceptionServiceImpl implements ExceptionService {
     } else if (requestProductDTO.getPrice() == null) {
       throwFieldIsRequired("Price");
     } else if (!validType(requestProductDTO.getType())) {
-      throw new ApiRequestException(httpServletRequest.getRequestURI(), "Product type doesn't exist. Please make product type first.");
+      throw new ApiRequestException(
+          httpServletRequest.getRequestURI(),
+          "Product type doesn't exist. Please make product type first.");
     }
   }
 
@@ -275,7 +277,9 @@ public class ExceptionServiceImpl implements ExceptionService {
     } else if (productRepository.existsByName(requestProductDTO.getName())) {
       productNameTaken();
     } else if (!validType(requestProductDTO.getType())) {
-      throw new ApiRequestException(httpServletRequest.getRequestURI(), "Product type doesn't exist. Please make product type first.");
+      throw new ApiRequestException(
+          httpServletRequest.getRequestURI(),
+          "Product type doesn't exist. Please make product type first.");
     }
   }
 
@@ -289,28 +293,35 @@ public class ExceptionServiceImpl implements ExceptionService {
   public void checkProductTypeRequestDTOErrors(ProductTypeRequestDTO productTypeRequestDTO) {
     if (productTypeRequestDTO == null) {
       throwMissingBodyRequired();
-    } else if (productTypeRequestDTO.getName() == null || Objects.equals(productTypeRequestDTO.getName(), "")) {
+    } else if (productTypeRequestDTO.getName() == null
+        || Objects.equals(productTypeRequestDTO.getName(), "")) {
       throwFieldIsRequired("Type name");
     } else if (validType(productTypeRequestDTO.getName())) {
-      throw new ApiRequestException(httpServletRequest.getRequestURI(), "Product type name already exists");
+      throw new ApiRequestException(
+          httpServletRequest.getRequestURI(), "Product type name already exists");
     }
   }
 
   @Override
   public void checkProductReviewRequestDTOErrors(ProductReviewRequestDTO productReviewRequestDTO) {
-    if (productReviewRequestDTO == null){
+    if (productReviewRequestDTO == null) {
       throwMissingBodyRequired();
-    } else if (productReviewRequestDTO.getReviewContent() == null || Objects.equals(productReviewRequestDTO.getReviewContent(), "")){
+    } else if (productReviewRequestDTO.getReviewContent() == null
+        || Objects.equals(productReviewRequestDTO.getReviewContent(), "")) {
       throwFieldIsRequired("Review content");
-    } else if (productReviewRequestDTO.getNumberOfStars() == null){
+    } else if (productReviewRequestDTO.getNumberOfStars() == null) {
       throwFieldIsRequired("Number of stars");
-    } else if (productReviewRequestDTO.getNumberOfStars() < 0 || productReviewRequestDTO.getNumberOfStars() > 5){
-      throw new ApiRequestException(httpServletRequest.getRequestURI(), "Number of stars needs to be between 0 and 5!");
+    } else if (productReviewRequestDTO.getNumberOfStars() < 0
+        || productReviewRequestDTO.getNumberOfStars() > 5) {
+      throw new ApiRequestException(
+          httpServletRequest.getRequestURI(), "Number of stars needs to be between 0 and 5!");
     } else if (productReviewRequestDTO.getOrderId() == null) {
       throwFieldIsRequired("Order ID");
-    } else if (productReviewRequestDTO.getProductName() == null || Objects.equals(productReviewRequestDTO.getProductName(), "")) {
+    } else if (productReviewRequestDTO.getProductName() == null
+        || Objects.equals(productReviewRequestDTO.getProductName(), "")) {
       throwFieldIsRequired("Product name");
-    } else if (productReviewRequestDTO.getUsername() == null || Objects.equals(productReviewRequestDTO.getUsername(), "")) {
+    } else if (productReviewRequestDTO.getUsername() == null
+        || Objects.equals(productReviewRequestDTO.getUsername(), "")) {
       throwFieldIsRequired("Username (email)");
     }
   }

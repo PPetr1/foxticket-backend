@@ -1,10 +1,9 @@
 package org.gfa.avusfoxticketbackend.config.models;
 
 import jakarta.persistence.*;
-import org.gfa.avusfoxticketbackend.models.User;
-
 import java.util.Date;
 import java.util.Objects;
+import org.gfa.avusfoxticketbackend.models.User;
 
 @Entity
 @Table(name = "refresh_tokens")

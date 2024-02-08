@@ -26,11 +26,11 @@ public class SecuredController {
 
   @Autowired
   public SecuredController(
-          UserService userService,
-          OrderService orderService,
-          CartService cartService,
-          JwtService jwtService,
-          ProductReviewService productReviewService) {
+      UserService userService,
+      OrderService orderService,
+      CartService cartService,
+      JwtService jwtService,
+      ProductReviewService productReviewService) {
     this.userService = userService;
     this.orderService = orderService;
     this.cartService = cartService;
@@ -88,27 +88,24 @@ public class SecuredController {
 
   @PostMapping("/review")
   public ResponseEntity<ProductReviewResponseDTO> review(
-          @RequestBody(required = false) ProductReviewRequestDTO productReviewRequestDTO,
-          @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+      @RequestBody(required = false) ProductReviewRequestDTO productReviewRequestDTO,
+      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     LogHandlerInterceptor.object = List.of(productReviewRequestDTO, token);
     return ResponseEntity.status(200)
-            .body(productReviewService.saveNewProductReview(productReviewRequestDTO, token));
+        .body(productReviewService.saveNewProductReview(productReviewRequestDTO, token));
   }
 
   @GetMapping("/get-user-reviews")
   public ResponseEntity<List<ProductReviewResponseDTO>> getUserReviews(
-          @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+      @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     LogHandlerInterceptor.object = token;
-    return ResponseEntity.status(200)
-            .body(productReviewService.getReviewsByUser(token));
+    return ResponseEntity.status(200).body(productReviewService.getReviewsByUser(token));
   }
 
   @GetMapping("/get-product-reviews/{productId}")
   public ResponseEntity<List<ProductReviewResponseDTO>> getProductReviews(
-          @PathVariable(required = false) Long productId){
+      @PathVariable(required = false) Long productId) {
     LogHandlerInterceptor.object = productId;
-    return ResponseEntity.status(200)
-            .body(productReviewService.getProducReviews(productId));
+    return ResponseEntity.status(200).body(productReviewService.getProducReviews(productId));
   }
-
 }

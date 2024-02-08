@@ -20,13 +20,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService implements EmailSender {
 
-  @Value("${MAIL_USERNAME}")
-  private String MAIL_USERNAME;
-
   private final JavaMailSender mailSender;
   private final ExceptionService exceptionService;
   private final ThymeleafService thymeleafService;
   private final JwtService jwtService;
+  @Value("${MAIL_USERNAME}")
+  private String MAIL_USERNAME;
 
   @Autowired
   public EmailService(

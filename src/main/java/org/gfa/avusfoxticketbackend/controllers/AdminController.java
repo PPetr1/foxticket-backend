@@ -64,7 +64,7 @@ public class AdminController {
   public ResponseEntity<List<ResponseProductTypeStatisticsDTO>> purchaseStatistics() {
     return ResponseEntity.status(200).body(productService.getStatistics());
   }
-  
+
   @PostMapping("/product-types")
   public ResponseEntity<ProductTypeResponseDTO> createNewProductType(
       @RequestBody(required = false) ProductTypeRequestDTO productTypeRequestDTO) {

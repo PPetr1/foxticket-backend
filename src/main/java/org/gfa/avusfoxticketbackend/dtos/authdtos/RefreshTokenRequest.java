@@ -7,8 +7,7 @@ import java.util.Objects;
 public class RefreshTokenRequest extends RequestDTO {
   private String token;
 
-  public RefreshTokenRequest() {
-  }
+  public RefreshTokenRequest() {}
 
   public RefreshTokenRequest(String token) {
     this.token = token;
@@ -24,9 +23,7 @@ public class RefreshTokenRequest extends RequestDTO {
 
   @Override
   public String toString() {
-    return "RefreshTokenRequest{"
-            + "token='" + token + '\''
-            + '}';
+    return "RefreshTokenRequest{" + "token='" + token + '\'' + '}';
   }
 
   @Override

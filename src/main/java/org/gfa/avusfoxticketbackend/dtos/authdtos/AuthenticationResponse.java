@@ -1,8 +1,7 @@
 package org.gfa.avusfoxticketbackend.dtos.authdtos;
 
-import org.gfa.avusfoxticketbackend.dtos.abstractdtos.ResponseDTO;
-
 import java.util.Objects;
+import org.gfa.avusfoxticketbackend.dtos.abstractdtos.ResponseDTO;
 
 public class AuthenticationResponse extends ResponseDTO {
 

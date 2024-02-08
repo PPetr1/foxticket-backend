@@ -39,7 +39,13 @@ public class Order {
     this.user = user;
   }
 
-  public Order(Long id, String status, String expiry, List<OrderProduct> orderProducts, User user, List<ProductReview> reviewsWithThisOrder) {
+  public Order(
+      Long id,
+      String status,
+      String expiry,
+      List<OrderProduct> orderProducts,
+      User user,
+      List<ProductReview> reviewsWithThisOrder) {
     this.id = id;
     this.status = status;
     this.expiry = expiry;

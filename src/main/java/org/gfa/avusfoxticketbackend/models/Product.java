@@ -55,15 +55,16 @@ public class Product {
     this.productType = productType;
   }
 
-  public Product(Long id,
-                 String name,
-                 Double price,
-                 Integer duration,
-                 String description,
-                 ProductType productType,
-                 List<CartProduct> cartProducts,
-                 List<OrderProduct> orderProducts,
-                 List<ProductReview> reviewList) {
+  public Product(
+      Long id,
+      String name,
+      Double price,
+      Integer duration,
+      String description,
+      ProductType productType,
+      List<CartProduct> cartProducts,
+      List<OrderProduct> orderProducts,
+      List<ProductReview> reviewList) {
     this.id = id;
     this.name = name;
     this.price = price;
