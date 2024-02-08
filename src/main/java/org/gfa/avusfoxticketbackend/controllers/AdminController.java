@@ -64,12 +64,22 @@ public class AdminController {
   public ResponseEntity<List<ResponseProductTypeStatisticsDTO>> purchaseStatistics() {
     return ResponseEntity.status(200).body(productService.getStatistics());
   }
-  
+
   @PostMapping("/product-types")
   public ResponseEntity<ProductTypeResponseDTO> createNewProductType(
       @RequestBody(required = false) ProductTypeRequestDTO productTypeRequestDTO) {
     LogHandlerInterceptor.object = productTypeRequestDTO;
     return ResponseEntity.status(200)
         .body(productTypeService.createProductType(productTypeRequestDTO));
+  }
+
+  @PatchMapping("/products/{productId}/sale")
+  public ResponseEntity<ResponseProductDTO> productSale(
+      @PathVariable Long productId, @RequestBody RequestSaleDTO requestSaleDTO) {
+    LogHandlerInterceptor.object = requestSaleDTO;
+    return ResponseEntity.status(200)
+        .body(
+            productService.setProductOnSale(
+                productId, requestSaleDTO.getDurationOfSale(), requestSaleDTO.getSale()));
   }
 }

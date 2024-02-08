@@ -15,6 +15,10 @@ public class Product {
   private Double price;
   private Integer duration;
   private String description;
+  private boolean isOnSale;
+  private Long startOfSale;
+  private Long endOfSale;
+  private Double priceBeforeSale;
 
   @ManyToOne
   @JoinColumn(name = "product_type_id")
@@ -50,6 +54,16 @@ public class Product {
     this.duration = duration;
     this.description = description;
     this.productType = productType;
+  }
+
+  public Product(
+      Long id, String name, Double price, Integer duration, String description, boolean isOnSale) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.duration = duration;
+    this.description = description;
+    this.isOnSale = isOnSale;
   }
 
   public List<CartProduct> getCartProducts() {
@@ -114,6 +128,38 @@ public class Product {
 
   public void setProductType(ProductType productType) {
     this.productType = productType;
+  }
+
+  public boolean isOnSale() {
+    return isOnSale;
+  }
+
+  public void setOnSale(boolean onSale) {
+    isOnSale = onSale;
+  }
+
+  public Long getStartOfSale() {
+    return startOfSale;
+  }
+
+  public void setStartOfSale(Long startOfSale) {
+    this.startOfSale = startOfSale;
+  }
+
+  public Long getEndOfSale() {
+    return endOfSale;
+  }
+
+  public void setEndOfSale(Long endOfSale) {
+    this.endOfSale = endOfSale;
+  }
+
+  public Double getPriceBeforeSale() {
+    return priceBeforeSale;
+  }
+
+  public void setPriceBeforeSale(Double priceBeforeSale) {
+    this.priceBeforeSale = priceBeforeSale;
   }
 
   @Override

@@ -10,15 +10,38 @@ public class ResponseProductDTO extends ResponseDTO {
   private String duration;
   private String description;
   private String type;
+  private boolean isOnSale;
+  private Long startOfSale;
+  private Long endOfSale;
 
   public ResponseProductDTO() {}
 
   public ResponseProductDTO(
-      Long id, String name, Double price, String duration, String description, String type) {
+      Long id,
+      String name,
+      Double price,
+      String duration,
+      String description,
+      String type,
+      boolean isOnSale,
+      Long startOfSale,
+      Long endOfSale) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.duration = duration + " hours";
+    this.description = description;
+    this.type = type;
+    this.isOnSale = isOnSale;
+    this.startOfSale = startOfSale;
+    this.endOfSale = endOfSale;
+  }
+
+  public ResponseProductDTO(Long id, String name, Double price, String duration, String description, String type) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.duration = duration;
     this.description = description;
     this.type = type;
   }
@@ -71,6 +94,30 @@ public class ResponseProductDTO extends ResponseDTO {
     this.type = type;
   }
 
+  public boolean isOnSale() {
+    return isOnSale;
+  }
+
+  public void setOnSale(boolean onSale) {
+    isOnSale = onSale;
+  }
+
+  public Long getStartOfSale() {
+    return startOfSale;
+  }
+
+  public void setStartOfSale(Long startOfSale) {
+    this.startOfSale = startOfSale;
+  }
+
+  public Long getEndOfSale() {
+    return endOfSale;
+  }
+
+  public void setEndOfSale(Long endOfSale) {
+    this.endOfSale = endOfSale;
+  }
+
   @Override
   public String toString() {
     return "ResponseProductDTO{"
@@ -81,14 +128,21 @@ public class ResponseProductDTO extends ResponseDTO {
         + '\''
         + ", price="
         + price
-        + ", duration="
+        + ", duration='"
         + duration
+        + '\''
         + ", description='"
         + description
         + '\''
         + ", type='"
         + type
         + '\''
+        + ", isOnSale="
+        + isOnSale
+        + ", startOfSale="
+        + startOfSale
+        + ", endOfSale="
+        + endOfSale
         + '}';
   }
 
@@ -97,19 +151,32 @@ public class ResponseProductDTO extends ResponseDTO {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof ResponseProductDTO that)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    return Objects.equals(getId(), that.getId())
+    ResponseProductDTO that = (ResponseProductDTO) o;
+    return isOnSale() == that.isOnSale()
+        && Objects.equals(getId(), that.getId())
         && Objects.equals(getName(), that.getName())
         && Objects.equals(getPrice(), that.getPrice())
         && Objects.equals(getDuration(), that.getDuration())
         && Objects.equals(getDescription(), that.getDescription())
-        && Objects.equals(getType(), that.getType());
+        && Objects.equals(getType(), that.getType())
+        && Objects.equals(getStartOfSale(), that.getStartOfSale())
+        && Objects.equals(getEndOfSale(), that.getEndOfSale());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getName(), getPrice(), getDuration(), getDescription(), getType());
+    return Objects.hash(
+        getId(),
+        getName(),
+        getPrice(),
+        getDuration(),
+        getDescription(),
+        getType(),
+        isOnSale(),
+        getStartOfSale(),
+        getEndOfSale());
   }
 }
