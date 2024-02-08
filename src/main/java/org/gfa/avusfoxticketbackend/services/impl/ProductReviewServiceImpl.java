@@ -1,6 +1,5 @@
 package org.gfa.avusfoxticketbackend.services.impl;
 
-import org.gfa.avusfoxticketbackend.dtos.CartResponseDTO;
 import org.gfa.avusfoxticketbackend.dtos.ProductReviewRequestDTO;
 import org.gfa.avusfoxticketbackend.dtos.ProductReviewResponseDTO;
 import org.gfa.avusfoxticketbackend.exception.ApiRequestException;
