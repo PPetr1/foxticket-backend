@@ -21,19 +21,21 @@ public class SecuredController {
   private final UserService userService;
   private final OrderService orderService;
   private final CartService cartService;
-
   private final JwtService jwtService;
+  private final ProductReviewService productReviewService;
 
   @Autowired
   public SecuredController(
-      UserService userService,
-      OrderService orderService,
-      CartService cartService,
-      JwtService jwtService) {
+          UserService userService,
+          OrderService orderService,
+          CartService cartService,
+          JwtService jwtService,
+          ProductReviewService productReviewService) {
     this.userService = userService;
     this.orderService = orderService;
     this.cartService = cartService;
     this.jwtService = jwtService;
+    this.productReviewService = productReviewService;
   }
 
   @PostMapping("/cart")
@@ -82,5 +84,14 @@ public class SecuredController {
     LogHandlerInterceptor.object = requestHeader;
     return ResponseEntity.status(200)
         .body(orderService.getOrderSummaryDTO(jwtService.extractBearerToken(requestHeader)));
+  }
+
+  @PostMapping
+  public ResponseEntity<ProductReviewResponseDTO> review(
+          @RequestBody(required = false) ProductReviewRequestDTO productReviewRequestDTO,
+          @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+    LogHandlerInterceptor.object = List.of(productReviewRequestDTO, token);
+    return ResponseEntity.status(200)
+            .body(productReviewService.saveNewProductReview(productReviewRequestDTO, token));
   }
 }

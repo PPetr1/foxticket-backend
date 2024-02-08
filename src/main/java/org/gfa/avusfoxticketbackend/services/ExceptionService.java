@@ -63,4 +63,6 @@ public interface ExceptionService {
   void throwFailedToGetEmailTemplate();
 
   void checkProductTypeRequestDTOErrors(ProductTypeRequestDTO productTypeRequestDTO);
+
+  void checkProductReviewRequestDTOErrors(ProductReviewRequestDTO productReviewRequestDTO);
 }

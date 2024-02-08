@@ -295,4 +295,23 @@ public class ExceptionServiceImpl implements ExceptionService {
       throw new ApiRequestException(httpServletRequest.getRequestURI(), "Product type name already exists");
     }
   }
+
+  @Override
+  public void checkProductReviewRequestDTOErrors(ProductReviewRequestDTO productReviewRequestDTO) {
+    if (productReviewRequestDTO == null){
+      throwMissingBodyRequired();
+    } else if (productReviewRequestDTO.getReviewContent() == null || Objects.equals(productReviewRequestDTO.getReviewContent(), "")){
+      throwFieldIsRequired("Review content");
+    } else if (productReviewRequestDTO.getNumberOfStars() == null){
+      throwFieldIsRequired("Number of stars");
+    } else if (productReviewRequestDTO.getNumberOfStars() < 0 || productReviewRequestDTO.getNumberOfStars() > 5){
+      throw new ApiRequestException(httpServletRequest.getRequestURI(), "Number of stars needs to be between 0 and 5!");
+    } else if (productReviewRequestDTO.getOrderId() == null) {
+      throwFieldIsRequired("Order ID");
+    } else if (productReviewRequestDTO.getProductName() == null || Objects.equals(productReviewRequestDTO.getProductName(), "")) {
+      throwFieldIsRequired("Product name");
+    } else if (productReviewRequestDTO.getUsername() == null || Objects.equals(productReviewRequestDTO.getUsername(), "")) {
+      throwFieldIsRequired("Username (email)");
+    }
+  }
 }

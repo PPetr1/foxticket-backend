@@ -6,5 +6,5 @@ import org.gfa.avusfoxticketbackend.models.ProductReview;
 
 public interface ProductReviewService {
     ProductReviewResponseDTO toProductReviewResponseDTO(ProductReview productReview);
-    ProductReviewResponseDTO saveNewProductReview(ProductReviewRequestDTO productReviewRequestDTO);
+    ProductReviewResponseDTO saveNewProductReview(ProductReviewRequestDTO productReviewRequestDTO, String token);
 }
