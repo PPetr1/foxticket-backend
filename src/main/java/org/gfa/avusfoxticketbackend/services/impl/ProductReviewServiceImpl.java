@@ -14,7 +14,9 @@ import org.gfa.avusfoxticketbackend.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductReviewServiceImpl implements ProductReviewService {
@@ -78,5 +80,35 @@ public class ProductReviewServiceImpl implements ProductReviewService {
         } else {
             throw new ApiRequestException("/api/review", "Unknown Error");
         }
+    }
+
+    @Override
+    public List<ProductReviewResponseDTO> getReviewsByUser(String token) {
+        Optional<User> currentUserOptional = userService.extractUserFromToken(token);
+        if (currentUserOptional.isPresent()){
+            return currentUserOptional
+                    .get()
+                    .getReviews()
+                    .stream()
+                    .map(this::toProductReviewResponseDTO)
+                    .collect(Collectors.toList());
+        } else {
+            throw new ApiRequestException("/api/get-user-reviews", "User not found.");
+        }
+    }
+
+  @Override
+  public List<ProductReviewResponseDTO> getProducReviews(Long productId) {
+    Optional<Product> currentProductOptional = productRepository.findById(productId);
+    if (currentProductOptional.isPresent()) {
+        return currentProductOptional
+              .get()
+              .getReviewList()
+              .stream()
+              .map(this::toProductReviewResponseDTO)
+              .collect(Collectors.toList());
+    } else {
+         throw new ApiRequestException("/api/get-user-reviews", "Product not found.");
+    }
     }
 }

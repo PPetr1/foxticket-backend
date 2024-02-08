@@ -86,7 +86,7 @@ public class SecuredController {
         .body(orderService.getOrderSummaryDTO(jwtService.extractBearerToken(requestHeader)));
   }
 
-  @PostMapping
+  @PostMapping("/review")
   public ResponseEntity<ProductReviewResponseDTO> review(
           @RequestBody(required = false) ProductReviewRequestDTO productReviewRequestDTO,
           @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
@@ -94,4 +94,21 @@ public class SecuredController {
     return ResponseEntity.status(200)
             .body(productReviewService.saveNewProductReview(productReviewRequestDTO, token));
   }
+
+  @GetMapping("/get-user-reviews")
+  public ResponseEntity<List<ProductReviewResponseDTO>> getUserReviews(
+          @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+    LogHandlerInterceptor.object = token;
+    return ResponseEntity.status(200)
+            .body(productReviewService.getReviewsByUser(token));
+  }
+
+  @GetMapping("/get-product-reviews/{productId}")
+  public ResponseEntity<List<ProductReviewResponseDTO>> getProductReviews(
+          @PathVariable(required = false) Long productId){
+    LogHandlerInterceptor.object = productId;
+    return ResponseEntity.status(200)
+            .body(productReviewService.getProducReviews(productId));
+  }
+
 }

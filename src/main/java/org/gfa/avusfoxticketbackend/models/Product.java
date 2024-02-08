@@ -139,6 +139,14 @@ public class Product {
     this.productType = productType;
   }
 
+  public List<ProductReview> getReviewList() {
+    return reviewList;
+  }
+
+  public void setReviewList(List<ProductReview> reviewList) {
+    this.reviewList = reviewList;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
