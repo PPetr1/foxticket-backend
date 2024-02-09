@@ -65,6 +65,6 @@ public interface ExceptionService {
   void checkProductTypeRequestDTOErrors(ProductTypeRequestDTO productTypeRequestDTO);
 
   void checkProductReviewRequestDTOErrors(ProductReviewRequestDTO productReviewRequestDTO);
-  
+
   void throwProductAlreadyOnSale();
 }

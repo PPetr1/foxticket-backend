@@ -20,10 +20,13 @@ import org.springframework.stereotype.Service;
 public class JwtServiceImpl implements JwtService {
 
   private final HttpServletRequest httpServletRequest;
+
   @Value("${JWT_SECRET_KEY}")
   private String SECRET_KEY;
+
   @Value("${EXPIRATION_TIME}")
   private String EXPIRATION_TIME;
+
   @Value("${EXPIRATION_TIME_FOR_VERIFICATION}")
   private String EXPIRATION_TIME_FOR_VERIFICATION;
 

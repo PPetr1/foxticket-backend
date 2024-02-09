@@ -47,6 +47,8 @@ class SecuredControllerTest {
 
   @MockBean private UserService userService;
 
+  @MockBean private ProductReviewService productReviewService;
+
   @Mock private CartRepository cartRepository;
 
   @Mock private ProductService productService;

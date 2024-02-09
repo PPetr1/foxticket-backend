@@ -1,11 +1,9 @@
 package org.gfa.avusfoxticketbackend.scheduled;
 
 import jakarta.transaction.Transactional;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.gfa.avusfoxticketbackend.email.EmailService;
 import org.gfa.avusfoxticketbackend.models.Cart;
 import org.gfa.avusfoxticketbackend.models.Product;
@@ -52,7 +50,7 @@ public class ScheduledTasks {
     }
   }
 
-  @Scheduled(fixedDelay = 50000)
+  @Scheduled(cron = "0 0 0 * * *")
   public void checkForProductsOutOfDiscount() {
     List<Product> products = productService.checkForProductsOutOfDiscount();
     if (!products.isEmpty()) {

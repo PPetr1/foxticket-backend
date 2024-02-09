@@ -65,7 +65,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     } else {
       refreshToken = authenticatedUser.getRefreshToken();
       if (refreshToken.getExpiryDate().before(new Date())) {
-        refreshToken.setExpiryDate(new Date(System.currentTimeMillis() + refreshTokenService.getExpirationTime()));
+        refreshToken.setExpiryDate(
+            new Date(System.currentTimeMillis() + refreshTokenService.getExpirationTime()));
         refreshTokenService.saveRefreshToken(refreshToken);
       }
     }

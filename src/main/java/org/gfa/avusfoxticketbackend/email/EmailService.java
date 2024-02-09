@@ -24,6 +24,7 @@ public class EmailService implements EmailSender {
   private final ExceptionService exceptionService;
   private final ThymeleafService thymeleafService;
   private final JwtService jwtService;
+
   @Value("${MAIL_USERNAME}")
   private String MAIL_USERNAME;
 

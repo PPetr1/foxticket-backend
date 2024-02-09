@@ -37,7 +37,8 @@ public class ResponseProductDTO extends ResponseDTO {
     this.endOfSale = endOfSale;
   }
 
-  public ResponseProductDTO(Long id, String name, Double price, String duration, String description, String type) {
+  public ResponseProductDTO(
+      Long id, String name, Double price, String duration, String description, String type) {
     this.id = id;
     this.name = name;
     this.price = price;

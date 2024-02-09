@@ -44,6 +44,15 @@ public class Product {
     this.productType = productType;
   }
 
+  public Product(Long id, String name, Double price, Integer duration, String description, boolean isOnSale) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.duration = duration;
+    this.description = description;
+    this.isOnSale = isOnSale;
+  }
+
   public Product(
       Long id,
       String name,
@@ -60,7 +69,6 @@ public class Product {
   }
 
   public Product(
-
       Long id,
       String name,
       Double price,
@@ -154,6 +162,8 @@ public class Product {
 
   public void setReviewList(List<ProductReview> reviewList) {
     this.reviewList = reviewList;
+  }
+
   public boolean isOnSale() {
     return isOnSale;
   }
@@ -194,14 +204,19 @@ public class Product {
     if (!(o instanceof Product product)) {
       return false;
     }
-    return Objects.equals(getId(), product.getId())
+    return isOnSale() == product.isOnSale()
+        && Objects.equals(getId(), product.getId())
         && Objects.equals(getName(), product.getName())
         && Objects.equals(getPrice(), product.getPrice())
         && Objects.equals(getDuration(), product.getDuration())
         && Objects.equals(getDescription(), product.getDescription())
-        && getProductType() == product.getProductType()
+        && Objects.equals(getStartOfSale(), product.getStartOfSale())
+        && Objects.equals(getEndOfSale(), product.getEndOfSale())
+        && Objects.equals(getPriceBeforeSale(), product.getPriceBeforeSale())
+        && Objects.equals(getProductType(), product.getProductType())
         && Objects.equals(getCartProducts(), product.getCartProducts())
-        && Objects.equals(getOrderProducts(), product.getOrderProducts());
+        && Objects.equals(getOrderProducts(), product.getOrderProducts())
+        && Objects.equals(getReviewList(), product.getReviewList());
   }
 
   @Override
@@ -212,8 +227,13 @@ public class Product {
         getPrice(),
         getDuration(),
         getDescription(),
+        isOnSale(),
+        getStartOfSale(),
+        getEndOfSale(),
+        getPriceBeforeSale(),
         getProductType(),
         getCartProducts(),
-        getOrderProducts());
+        getOrderProducts(),
+        getReviewList());
   }
 }

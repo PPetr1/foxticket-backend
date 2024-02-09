@@ -55,16 +55,17 @@ public class User implements UserDetails {
     this.orders = new ArrayList<>();
   }
 
-  public User(Long id,
-              String name,
-              String email,
-              String password,
-              Role role,
-              Boolean isVerified,
-              List<Order> orders,
-              Cart cart,
-              RefreshToken refreshToken,
-              List<ProductReview> reviews) {
+  public User(
+      Long id,
+      String name,
+      String email,
+      String password,
+      Role role,
+      Boolean isVerified,
+      List<Order> orders,
+      Cart cart,
+      RefreshToken refreshToken,
+      List<ProductReview> reviews) {
     this.id = id;
     this.name = name;
     this.email = email;
@@ -195,16 +196,28 @@ public class User implements UserDetails {
   @Override
   public String toString() {
     return "User{"
-            + "id=" + id
-            + ", name='" + name + '\''
-            + ", email='" + email + '\''
-            + ", password='" + password + '\''
-            + ", role=" + role
-            + ", isVerified=" + isVerified
-            + ", orders=" + orders
-            + ", cart=" + cart
-            + ", refreshToken=" + (refreshToken != null ? refreshToken.getToken() : null)
-            + '}';
+        + "id="
+        + id
+        + ", name='"
+        + name
+        + '\''
+        + ", email='"
+        + email
+        + '\''
+        + ", password='"
+        + password
+        + '\''
+        + ", role="
+        + role
+        + ", isVerified="
+        + isVerified
+        + ", orders="
+        + orders
+        + ", cart="
+        + cart
+        + ", refreshToken="
+        + (refreshToken != null ? refreshToken.getToken() : null)
+        + '}';
   }
 
   @Override
@@ -215,19 +228,28 @@ public class User implements UserDetails {
     if (!(o instanceof User user)) {
       return false;
     }
-    return Objects.equals(getId(),user.getId())
-            && Objects.equals(getName(), user.getName())
-            && Objects.equals(getEmail(), user.getEmail())
-            && Objects.equals(getPassword(), user.getPassword())
-            && getRole() == user.getRole()
-            && Objects.equals(isVerified, user.isVerified)
-            && Objects.equals(getOrders(), user.getOrders())
-            && Objects.equals(getCart(), user.getCart())
-            && Objects.equals(getRefreshToken(), user.getRefreshToken());
+    return Objects.equals(getId(), user.getId())
+        && Objects.equals(getName(), user.getName())
+        && Objects.equals(getEmail(), user.getEmail())
+        && Objects.equals(getPassword(), user.getPassword())
+        && getRole() == user.getRole()
+        && Objects.equals(isVerified, user.isVerified)
+        && Objects.equals(getOrders(), user.getOrders())
+        && Objects.equals(getCart(), user.getCart())
+        && Objects.equals(getRefreshToken(), user.getRefreshToken());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(getId(), getName(), getEmail(), getPassword(), getRole(), isVerified, getOrders(), getCart(), getRefreshToken());
+    return Objects.hash(
+        getId(),
+        getName(),
+        getEmail(),
+        getPassword(),
+        getRole(),
+        isVerified,
+        getOrders(),
+        getCart(),
+        getRefreshToken());
   }
 }
