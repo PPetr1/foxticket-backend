@@ -1,6 +1,12 @@
 package org.gfa.avusfoxticketbackend.unit.controllers;
 
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import org.gfa.avusfoxticketbackend.config.models.RefreshToken;
 import org.gfa.avusfoxticketbackend.config.services.JwtService;
 import org.gfa.avusfoxticketbackend.config.services.RefreshTokenService;
@@ -20,12 +26,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
-
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = UnsecuredController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -52,24 +52,22 @@ class UnsecuredControllerTest {
     String token = "refreshing";
     RefreshTokenRequest request = new RefreshTokenRequest(token);
 
-    User user = new User("John","johnny@kek.lmao","1337");
-    RefreshToken refreshToken = new RefreshToken(token, new Date(System.currentTimeMillis() + 1000000), user);
+    User user = new User("John", "johnny@kek.lmao", "1337");
+    RefreshToken refreshToken =
+        new RefreshToken(token, new Date(System.currentTimeMillis() + 1000000), user);
 
-    AuthenticationResponse expected = new AuthenticationResponse("ok",
-            token,
-            "jwtxdd");
+    AuthenticationResponse expected = new AuthenticationResponse("ok", token, "jwtxdd");
 
     when(refreshTokenService.generateNewToken(request)).thenReturn(expected);
 
-
     mockMvc
-            .perform(
-                    post("/api/refresh-token")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .characterEncoding(StandardCharsets.UTF_8)
-                            .content(objectMapper.writeValueAsString(request)))
-            .andExpect(status().isOk())
-            .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+        .perform(
+            post("/api/refresh-token")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8)
+                .content(objectMapper.writeValueAsString(request)))
+        .andExpect(status().isOk())
+        .andExpect(content().json(objectMapper.writeValueAsString(expected)));
     verify(refreshTokenService, times(1)).generateNewToken(request);
   }
 }

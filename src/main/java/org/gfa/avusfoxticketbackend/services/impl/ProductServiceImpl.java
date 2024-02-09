@@ -46,7 +46,10 @@ public class ProductServiceImpl implements ProductService {
         product.getPrice(),
         String.valueOf(product.getDuration()),
         product.getDescription(),
-        product.getProductType().toString());
+        product.getProductType().toString(),
+        product.isOnSale(),
+        product.getStartOfSale(),
+        product.getEndOfSale());
   }
 
   @Override
@@ -77,7 +80,8 @@ public class ProductServiceImpl implements ProductService {
       product.setPrice(requestProductDTO.getPrice());
       product.setDuration(requestProductDTO.getDuration());
       product.setDescription(requestProductDTO.getDescription());
-      product.setProductType(productTypeRepository.getProductTypeByTypeName(requestProductDTO.getType()));
+      product.setProductType(
+          productTypeRepository.getProductTypeByTypeName(requestProductDTO.getType()));
       productRepository.save(product);
 
       return toResponseProductDto(product);
@@ -120,12 +124,41 @@ public class ProductServiceImpl implements ProductService {
         product.getPrice(),
         String.valueOf(product.getDuration()),
         product.getDescription(),
-        product.getProductType().getTypeName());
+        product.getProductType().getTypeName(),
+        product.isOnSale(),
+        product.getStartOfSale(),
+        product.getEndOfSale());
   }
 
   @Override
   public List<ResponseProductTypeStatisticsDTO> getStatistics() {
     List<ResponseProductTypeStatisticsDTO> sum = orderProductRepository.findProductSalesSummary();
     return orderProductRepository.findProductSalesSummary();
+  }
+
+  @Override
+  public ResponseProductDTO setProductOnSale(Long productId, Long durationOfSale, Double sale) {
+    Optional<Product> productOpt = productRepository.findById(productId);
+    if (productOpt.isEmpty()) {
+      exceptionService.throwProductNotFound();
+    }
+    Product product = productOpt.get();
+    if (product.isOnSale()) {
+      exceptionService.throwProductAlreadyOnSale();
+    }
+    product.setOnSale(true);
+    Long now = System.currentTimeMillis() / 1000L;
+    product.setStartOfSale(now);
+    product.setEndOfSale(now + durationOfSale);
+    product.setPriceBeforeSale(product.getPrice());
+    product.setPrice(product.getPrice() - (product.getPrice() * sale));
+    productRepository.save(product);
+    return productToResponseProductDTOConvert(product);
+  }
+
+  @Override
+  public List<Product> checkForProductsOutOfDiscount() {
+    Long now = System.currentTimeMillis();
+    return productRepository.findProductsThatAreOutOfDiscount(now);
   }
 }

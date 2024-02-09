@@ -204,6 +204,12 @@ public class ExceptionServiceImpl implements ExceptionService {
   }
 
   @Override
+  public void throwProductAlreadyOnSale() {
+    throw new ApiRequestException(
+        httpServletRequest.getRequestURI(), "Product is already on sale.");
+  }
+
+  @Override
   public void throwFailedToGetEmailTemplate() {
     throw new RuntimeException("Failed To Get Email Template");
   }

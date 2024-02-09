@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import org.gfa.avusfoxticketbackend.config.services.JwtService;
 import org.gfa.avusfoxticketbackend.controllers.AdminController;
 import org.gfa.avusfoxticketbackend.dtos.RequestProductDTO;
+import org.gfa.avusfoxticketbackend.dtos.RequestSaleDTO;
 import org.gfa.avusfoxticketbackend.dtos.ResponseProductDTO;
 import org.gfa.avusfoxticketbackend.exception.ApiRequestException;
 import org.gfa.avusfoxticketbackend.services.NewsService;
@@ -197,5 +198,57 @@ public class AdminControllerTest {
         .andExpect(status().is(400))
         .andExpect(jsonPath("$.endpoint", CoreMatchers.is(response.getEndpoint())))
         .andExpect(jsonPath("$.message", CoreMatchers.is(response.getMessage())));
+  }
+
+  @Test
+  public void productSale_ProductDoesntExist_ThrowException() throws Exception {
+    RequestSaleDTO request = new RequestSaleDTO(1L, 0.2);
+    ApiRequestException response =
+        new ApiRequestException("/api/admin/products/12/sale", "Product doesn't exist.");
+    when(productService.setProductOnSale(12L, 1L, 0.2)).thenThrow(response);
+    mockMvc
+        .perform(
+            patch("/api/admin/products/12/sale")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+        .andExpect(status().is(400))
+        .andExpect(jsonPath("$.endpoint", CoreMatchers.is(response.getEndpoint())))
+        .andExpect(jsonPath("$.message", CoreMatchers.is(response.getMessage())))
+        .andDo(print());
+  }
+
+  @Test
+  public void productSale_ProductAlreadyOnSale_ThrowException() throws Exception {
+    RequestSaleDTO request = new RequestSaleDTO(1L, 0.2);
+    ApiRequestException response =
+        new ApiRequestException("/api/admin/products/1/sale", "Product is already on sale.");
+    when(productService.setProductOnSale(1L, request.getDurationOfSale(), request.getSale()))
+        .thenThrow(response);
+    mockMvc
+        .perform(
+            patch("/api/admin/products/1/sale")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding(StandardCharsets.UTF_8.name())
+                .content(objectMapper.writeValueAsString(request)))
+        .andExpect(status().is(400))
+        .andExpect(jsonPath("$.endpoint", CoreMatchers.is(response.getEndpoint())))
+        .andExpect(jsonPath("$.message", CoreMatchers.is(response.getMessage())))
+        .andDo(print());
+  }
+
+  @Test
+  public void productSale_ProductSetOnSale_200() throws Exception {
+    RequestSaleDTO request = new RequestSaleDTO(1L, 0.2);
+    ResponseProductDTO response =
+        new ResponseProductDTO(1L, "product", 4.0, "4", "description", "type", true, 300L, 400L);
+    when(productService.setProductOnSale(1L, request.getDurationOfSale(), request.getSale()))
+        .thenReturn(response);
+    mockMvc
+        .perform(
+            patch("/api/admin/products/1/sale")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+        .andExpect(status().is(200))
+        .andExpect(content().json(objectMapper.writeValueAsString(response)));
   }
 }
