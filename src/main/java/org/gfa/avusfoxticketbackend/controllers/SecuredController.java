@@ -92,14 +92,14 @@ public class SecuredController {
       @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     LogHandlerInterceptor.object = List.of(productReviewRequestDTO, token);
     return ResponseEntity.status(200)
-        .body(productReviewService.saveNewProductReview(productReviewRequestDTO, token));
+        .body(productReviewService.saveNewProductReview(productReviewRequestDTO, jwtService.extractBearerToken(token)));
   }
 
   @GetMapping("/get-user-reviews")
   public ResponseEntity<List<ProductReviewResponseDTO>> getUserReviews(
       @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
     LogHandlerInterceptor.object = token;
-    return ResponseEntity.status(200).body(productReviewService.getReviewsByUser(token));
+    return ResponseEntity.status(200).body(productReviewService.getReviewsByUser(jwtService.extractBearerToken(token)));
   }
 
   @GetMapping("/get-product-reviews/{productId}")
